@@ -291,13 +291,14 @@ module.exports = class Node extends PropertyContainer
 
             services = @db.getServices _
 
-            encodedKey = encodeURIComponent key
-            encodedValue = encodeURIComponent value
-            url = "#{services.node_index}/#{index}/#{encodedKey}/#{encodedValue}"
+            url = "#{services.node_index}/#{index}"
 
             response = request.post
                 url: url
-                json: @self
+                json:
+                    uri: @self
+                    key: key
+                    value: value
             , _
 
             if response.statusCode isnt status.CREATED
